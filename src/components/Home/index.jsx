@@ -1,15 +1,25 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'gatsby-link';
-import { flow, slice, map, includes, get, size, isEmpty, isArray, first } from 'lodash/fp';
+import {
+  flow,
+  slice,
+  map,
+  includes,
+  get,
+  size,
+  isEmpty,
+  isArray,
+  first
+} from 'lodash/fp';
 import Helmet from 'react-helmet';
 import Wrapper from '~/components/Common/Wrapper';
 import SimpleWrapper from '~/components/Common/SimpleWrapper';
 import PortfolioCard from '~/components/Common/PortfolioCard';
 import './index.css';
 
-const Title = styled.h1`
+const Title = styled.h1 `
   position: absolute;
   top: 0;
   bottom: 0;
@@ -28,37 +38,36 @@ const Title = styled.h1`
   white-space: nowrap;
 `;
 
-const Home = ({ portfolios }) => (
+const Home = ({portfolios}) => (
   <Fragment>
     <Wrapper isHome>
       <Title>
-        Hello, Blog!
+        Hello, World!
       </Title>
       <Helmet>
         <title>
-          I'm Wonism!
+          gatsby-sagas-blog
         </title>
-        <meta name="og:title" content="I'm Wonism!" />
+        <meta name="og:title" content="I'm Brocier!"/>
       </Helmet>
     </Wrapper>
-    {size(portfolios) >= 4 ? (
-      <SimpleWrapper>
-        {flow(
-          slice(0, 4),
-          map((edge) => {
+    {size(portfolios) >= 4
+      ? (
+        <SimpleWrapper>
+          {flow(slice(0, 4), map((edge) => {
             const portfolio = get('node.frontmatter')(edge);
-            const { path, title, images } = portfolio;
-            const image = isArray(images) ? first(images) : null;
+            const {path, title, images} = portfolio;
+            const image = isArray(images)
+              ? first(images)
+              : null;
 
             if (!isEmpty(image)) {
               return (
                 <PortfolioCard key={path}>
                   <Link to={path}>
-                    {includes('//')(image) ? (
-                      <img src={image} alt="portfolio" />
-                    ) : (
-                      <img src={require(`~/resources/${image}`)} alt="portfolio" />
-                    )}
+                    {includes('//')(image)
+                      ? (<img src={image} alt="portfolio"/>)
+                      : (<img src={require(`~/resources/${image}`)} alt="portfolio"/>)}
                     <h6>
                       {title}
                     </h6>
@@ -76,19 +85,19 @@ const Home = ({ portfolios }) => (
                 </Link>
               </PortfolioCard>
             );
-          })
-        )(portfolios)}
-      </SimpleWrapper>
-    ) : null}
+          }))(portfolios)}
+        </SimpleWrapper>
+      )
+      : null}
   </Fragment>
 );
 
 Home.propTypes = {
-  portfolios: PropTypes.arrayOf(PropTypes.shape({})),
+  portfolios: PropTypes.arrayOf(PropTypes.shape({}))
 };
 
 Home.defaultProps = {
-  portfolios: [],
+  portfolios: []
 };
 
 export default Home;
