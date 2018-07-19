@@ -77,7 +77,9 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public -b master",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "gatsby build",
+    "start": "gatsby serve"
   },
   "browserslist": [
     "> 10%",
